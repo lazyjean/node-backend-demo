@@ -8,7 +8,7 @@ const uri = "mongodb://root:example@localhost:27017/";
 const client = new MongoClient(uri);
 
 const userCollection = async () => {
-    const db = client.db("small-demo")
+    const db = client.db("node-backend-demo")
     const collection = db.collection<User>("users")
     await collection.createIndex({username: 1, email: 1}, {unique: true})
     return collection
