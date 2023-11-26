@@ -1,0 +1,7 @@
+node_modules/
+tests
+dist
+Dockerfile
+docker-compose.yml
+nodemon.json
+README.md

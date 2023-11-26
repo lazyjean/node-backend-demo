@@ -3,7 +3,9 @@ import {logger} from "../../../app/logger";
 
 const AuthLoginAttemptsCntKeyPrefix = "auth:login:attempts-cnt:"
 
-const client = createClient();
+const client = createClient({
+  url: process.env.REDIS_HOST || "localhost:6379",
+});
 
 (async () => {
   await client.on('error', (err) => {

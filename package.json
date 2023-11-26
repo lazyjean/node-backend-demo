@@ -4,7 +4,10 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start:dev": "npx nodemon"
+    "start:dev": "npx nodemon",
+    "build": "yarn tsc",
+    "start:prod": "node dist/app/index.js",
+    "test": "jest"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",

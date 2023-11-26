@@ -33,8 +33,6 @@ services:
       - "no-new-privileges:true"
 
   redis-commander:
-    container_name: redis-commander
-    hostname: redis-commander
     image: ghcr.io/joeferner/redis-commander:latest
     build: .
     restart: always
@@ -43,11 +41,15 @@ services:
     ports:
       - "8082:8081"
 
-  node-backend-demo:
-    image: node-backend-demo:v3
+  backend:
+    image: leeszi/node-backend-demo:v8
+#    command:
+#      - sleep
+#      - infinity
     environment:
       MONGODB_URI: mongodb://root:example@mongo:27017/
-      MONGO_DB_NAME: node-demo
+      MONGO_DB_NAME: node-backend-demo
+      REDIS_HOST: redis://@redis:6379
     restart: always
     ports:
       - "3000:3000"

@@ -3,12 +3,14 @@ import {User} from "../../domain/user";
 import errors from "../../domain/errors";
 import {logger} from "../../../app/logger";
 
-logger.info("init mongodb client")
 const uri: string = process.env.MONGODB_URI || "mongodb://root:example@localhost:27017/";
+const dbName = process.env.MONGO_DB_NAME || "node-backend-demo"
+
+logger.info("init mongodb client with uri: " + uri)
 const client = new MongoClient(uri);
 
 const userCollection = async () => {
-    const db = client.db("node-backend-demo")
+    const db = client.db(dbName)
     const collection = db.collection<User>("users")
     await collection.createIndex({username: 1, email: 1}, {unique: true})
     return collection
