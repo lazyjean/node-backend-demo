@@ -4,7 +4,7 @@ import errors from "../../domain/errors";
 import {logger} from "../../../app/logger";
 
 logger.info("init mongodb client")
-const uri = "mongodb://root:example@localhost:27017/";
+const uri: string = process.env.MONGODB_URI || "mongodb://root:example@localhost:27017/";
 const client = new MongoClient(uri);
 
 const userCollection = async () => {
