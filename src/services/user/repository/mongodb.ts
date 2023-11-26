@@ -1,8 +1,9 @@
 import {MongoClient} from "mongodb";
 import {User} from "../../domain/user";
 import errors from "../../domain/errors";
+import {logger} from "../../../app/logger";
 
-console.log("init mongodb client")
+logger.info("init mongodb client")
 const uri = "mongodb://root:example@localhost:27017/";
 const client = new MongoClient(uri);
 
@@ -21,7 +22,7 @@ export async function createUser(user: User) {
             updatedAt: new Date()
         })
     } catch (e) {
-        console.error(e)
+        logger.error(e)
         throw errors.UserAlreadyExists
     }
 }
@@ -30,7 +31,7 @@ export const deleteUser = async (username: string) => {
     try {
         await (await userCollection()).updateOne({$set: {deletedAt: new Date()}}, {username: username})
     } catch (e) {
-        console.error(e)
+        logger.error(e)
         throw errors.UserNotExists
     }
 
@@ -43,7 +44,7 @@ export async function updateUser(user: User) {
                 updatedAt: new Date(),
             }}, {username: user.username})
     } catch (e) {
-        console.error(e)
+        logger.error(e)
         throw errors.UserNotExists
     }
 }

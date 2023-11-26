@@ -1,4 +1,5 @@
 import { createClient } from 'redis';
+import {logger} from "../../../app/logger";
 
 const AuthLoginAttemptsCntKeyPrefix = "auth:login:attempts-cnt:"
 
@@ -6,9 +7,9 @@ const client = createClient();
 
 (async () => {
   await client.on('error', (err) => {
-    console.error(err);
+    logger.error(err);
   }).on('connect', () => {
-    console.log('Redis connected');
+    logger.info('Redis connected');
   }).connect();
 })();
 
@@ -27,6 +28,10 @@ export const increaseLoginFailedCount = async (username: string) => {
 export const getLoginFailedCount = async (username: string) => {
   const str = await client.get(AuthLoginAttemptsCntKeyPrefix + username)
   return str? parseInt(str) : 0
+};
+
+export const resetLoginFailedCount = async (username: string) => {
+  await client.del(AuthLoginAttemptsCntKeyPrefix + username)
 };
 
 export default {

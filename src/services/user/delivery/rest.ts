@@ -1,17 +1,16 @@
 import { Request, Response, NextFunction} from "express";
 import user from "../usecase/user";
 import {User} from "../../domain/user";
+import {logger} from "../../../app/logger";
 
 const login = (req: Request, res: Response) => {
-    user.login(req.body.username, req.body.password).then((token: string) => {
+    user.login(req.body.username, req.body.password).then(result => {
         res.send(JSON.stringify({
             message: "succeed",
-            data: {
-                token
-            }
+            data: result
         }))
     }).catch(err => {
-        console.error(err);
+        logger.error(err);
         res.send(JSON.stringify({
             message: "failed, err is " + err,
             data: null
@@ -26,7 +25,7 @@ const register = (req: Request, res: Response) => {
             data: null,
         }))
     }).catch(err => {
-        console.error(err);
+        logger.error(err);
         res.send(JSON.stringify({
             message: "failed, err is " + err,
             data: null
@@ -41,7 +40,7 @@ const profile = (req: Request, res: Response) => {
             data: user
         }))
     }).catch(err => {
-        console.error(err);
+        logger.error(err);
         res.send(JSON.stringify({
             message: "failed, err is " + err,
             data: null
