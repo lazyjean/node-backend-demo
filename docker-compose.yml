@@ -42,7 +42,7 @@ services:
       - "8082:8081"
 
   backend:
-    image: leeszi/node-backend-demo:v8
+    image: leeszi/node-backend-demo:latest
 #    command:
 #      - sleep
 #      - infinity
