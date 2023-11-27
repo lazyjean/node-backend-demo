@@ -9,6 +9,11 @@
     "strict": true,
     "noImplicitAny": true,
     "esModuleInterop": true,
-    "resolveJsonModule": true
-  }
+    "resolveJsonModule": true,
+  },
+  "exclude": [
+    "**/*.spec.ts",
+    "dist/**/*.js",
+    "*.config.js"
+  ]
 }

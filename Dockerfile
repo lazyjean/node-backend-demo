@@ -7,8 +7,8 @@ WORKDIR /home/node/app
 COPY package*.json ./
 COPY --chown=node:node . .
 
-USER node
-RUN yarn install && yarn build
+RUN yarn install && \
+    yarn build
 
 EXPOSE 3000
 CMD [ "yarn", "start:prod" ]

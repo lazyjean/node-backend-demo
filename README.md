@@ -50,3 +50,8 @@ $ yarn start:dev
 # run test
 $ yarn test
 ```
+
+## build new docker image
+```bash
+docker build . -t leeszi/node-backend-demo:${ver}
+```
