@@ -3,8 +3,10 @@ import {logger} from "../../../app/logger";
 
 const AuthLoginAttemptsCntKeyPrefix = "auth:login:attempts-cnt:"
 
+const accountLockDuration = process.env.ACCOUNT_LOCK_DURATION ? parseInt(process.env.ACCOUNT_LOCK_DURATION) : 5 * 60;
+
 const client = createClient({
-    url: process.env.REDIS_HOST || "localhost:6379",
+    url: process.env.REDIS_HOST || "redis://@localhost:6379",
 });
 
 (async () => {
@@ -18,7 +20,7 @@ const client = createClient({
 export const increaseLoginFailedCount = async (username: string) => {
     const key = AuthLoginAttemptsCntKeyPrefix + username
     await client.incr(key)
-    await client.expire(key, 5 * 60)
+    await client.expire(key, accountLockDuration)
 };
 
 export const getLoginFailedCount = async (username: string) => {

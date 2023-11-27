@@ -1,11 +1,10 @@
 import {createUser, findUserByUsername} from "../repository/mongodb";
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
 import errors from "../../domain/errors";
 import {getLoginFailedCount, increaseLoginFailedCount, resetLoginFailedCount} from "../repository/redis";
 import {User} from "../../domain/user";
+import token from "./token";
 
-const sk = "fb0f6084ce77489fe3e5f8eff956d768019691f5551d7b2437ae3679ade1d4e3a55c29deb053e84325f5fee9587a108299051638d0a8c03946d0fa055f0f7cb5"
 
 export interface LoginRsp {
     loginUser: User,
@@ -33,9 +32,6 @@ const login = async (username: string, password: string): Promise<LoginRsp>=> {
 
     // generate jwt token, and then return
     await resetLoginFailedCount(username)
-    const token = jwt.sign({
-        username: user.username
-    }, sk, {expiresIn: "24h"})
 
     return {
         loginUser: {
@@ -44,7 +40,7 @@ const login = async (username: string, password: string): Promise<LoginRsp>=> {
             nickname: user.nickname,
             avatar: user.avatar
         },
-        token
+        token: token.generate(username, "24h")
     }
 }
 
@@ -67,8 +63,8 @@ const findUser = async (username: string) => {
     return user
 }
 
-const verifyToken = (token: string) => {
-    return jwt.verify(token, sk)
+const verifyToken = (val: string) => {
+    return token.verify(val)
 }
 
 export default {
