@@ -5,7 +5,7 @@ This is a simple architecture design based on [DDD](https://en.wikipedia.org/wik
 Its core idea is to separate the business logic from the data access layer and user interface.
 
 ## Domain
-Place business model in the `src/domain`. including entities, value objects, and use cases (didn't define usecase interface in this demo for simplicity). 
+Place business model in the `src/domain`. including entities, value objects, and use cases (We didn't define usecase interface in this demo for simplicity). 
 
 ## Business Logic
 The business logic is implemented in the `src/services/user/usecase`.
@@ -44,7 +44,7 @@ b56db1f1e0ed   redis:6.0.20-alpine3.18                    "docker-entrypoint.sâ€
 # install dependencies
 $ yarn install
 
-# run dev server. You need run docker-compose services first. Because the server depends on redis and mongodb.
+# run dev server. You need to run docker-compose services first. Because the server depends on redis and mongodb.
 $ yarn start:dev
 
 # run test
